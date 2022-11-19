@@ -1,26 +1,26 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.filmorate.model.*;
+import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.utils.ValidationException;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 @RestController
 @Slf4j
+@Validated
 public class FilmController {
     private final HashMap<Integer, Film> films = new HashMap<>();
     private int id=0;
 
     @PostMapping("/films")
-    public Film addNewFilm(@RequestBody Film film) throws ValidationException {
-        validate(film);
+    public Film addNewFilm(@RequestBody @Valid @NotNull Film film) throws ValidationException {
         if(films.containsKey(film.getId())){
             throw new ValidationException("Фильм - уже есть в базе", film.getId());
         }else {
@@ -32,8 +32,7 @@ public class FilmController {
     }
 
     @PutMapping("/films")
-    public Film updateFilm(@RequestBody Film film) throws ValidationException {
-        validate(film);
+    public Film updateFilm(@RequestBody @Valid @NotNull Film film) throws ValidationException {
         if (films.containsKey(film.getId())) {
             films.put(film.getId(), film);
             return film;
@@ -45,41 +44,5 @@ public class FilmController {
     @GetMapping("/films")
     public List<Film> getFilmsList() {
         return new ArrayList<>(films.values());
-    }
-
-    private void validate(Film film) throws ValidationException {
-        boolean isNameEmpty = film.getName() == null || film.getName().isEmpty();
-        boolean isNameTooLong = film.getDescription().length() > 200;
-
-        Date filmBirthDate = getDateFromString("28-12-1895");
-        boolean isReleaseDateIsTooEarly = film.getReleaseDate().before(filmBirthDate);
-
-        boolean isDurationCorrect = film.getDuration() < 0;
-
-        if (isNameEmpty) {
-            throw new ValidationException("название не может быть пустым;", film.getId());
-        } else if (isNameTooLong) {
-            throw new ValidationException("максимальная длина описания — 200 символов;", film.getId());
-        }
-
-        if (isReleaseDateIsTooEarly) {
-            throw new ValidationException("дата релиза — не раньше 28 декабря 1895 года;", film.getId());
-        }
-
-        if (isDurationCorrect) {
-            throw new ValidationException("продолжительность фильма должна быть положительной;", film.getId());
-        }
-    }
-
-
-    private Date getDateFromString(String dateStr) {
-        Date date = null;
-        try {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-            date = formatter.parse(dateStr);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return date;
     }
 }
