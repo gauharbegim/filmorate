@@ -12,6 +12,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @ToString
@@ -35,6 +37,16 @@ public class Film {
     @Min(value = 0, message = "duration should be greater than 0")
     @NotNull(message = "duration should not be null")
     private Integer duration;
+
+    Set<Integer> likedUsersList = new HashSet<>();
+
+    private Integer likeCnt = 0;
+
+    public void setLikedUsersList(Set<Integer> likedUsersList) {
+        this.likedUsersList = likedUsersList;
+        likeCnt = likedUsersList.size();
+    }
+
 }
 
 
