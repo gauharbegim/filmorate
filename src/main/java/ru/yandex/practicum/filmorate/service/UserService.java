@@ -99,10 +99,13 @@ public class UserService {
         if (user != null && friend != null) {
             Set<Integer> userFriends = user.getFriends();
             Set<Integer> friendFriends = friend.getFriends();
-            for (Integer userFriendId : userFriends) {
-                if (friendFriends.contains(userFriendId)) {
-                    User mutualFriend = userStorage.getUser(userFriendId);
-                    friendsList.add(mutualFriend);
+            if (userFriends!=null && friendFriends!=null ) {
+                for (Integer userFriendId : userFriends) {
+                    if (friendFriends.contains(userFriendId)) {
+                        User mutualFriend = userStorage.getUser(userFriendId);
+                        friendsList.add(mutualFriend);
+                    }
+
                 }
 
             }
