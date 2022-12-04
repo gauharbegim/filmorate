@@ -24,21 +24,13 @@ public class FilmController {
     private final FilmService filmService;
 
     @PostMapping("/films")
-    public Film addNewFilm(@RequestBody @Valid @NotNull Film film){
-        try {
-            return filmStorage.addNewFilm(film);
-        }catch (ValidationException e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(),e);
-        }
+    public Film addNewFilm(@RequestBody @Valid @NotNull Film film) throws ValidationException {
+        return filmStorage.addNewFilm(film);
     }
 
     @PutMapping("/films")
-    public Film updateFilm(@RequestBody @Valid @NotNull Film film){
-        try {
-            return filmStorage.updateFilm(film);
-        }catch (ValidationException e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(),e);
-        }
+    public Film updateFilm(@RequestBody @Valid @NotNull Film film) throws ValidationException {
+        return filmStorage.updateFilm(film);
     }
 
     @GetMapping("/films")
