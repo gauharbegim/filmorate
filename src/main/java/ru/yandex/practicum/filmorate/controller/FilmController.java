@@ -39,7 +39,7 @@ public class FilmController {
     }
 
     @PutMapping("/films/{id}/like/{userId}")
-    public Film addLike(@PathVariable Integer id, @PathVariable Integer userId){
+    public Film addLike(@PathVariable Integer id, @PathVariable Integer userId) {
         try {
             return filmService.addLikeToFilm(id, userId);
         } catch (ValidationException e) {
