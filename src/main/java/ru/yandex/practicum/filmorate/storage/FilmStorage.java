@@ -10,5 +10,5 @@ public interface FilmStorage {
     ArrayList<Film> getFilm();
 //    Film deleteFilm(Film film);
     Film updateFilm(Film film) throws ValidationException;
-    Film getFilm(Integer id) throws ValidationException;
+    Film getFilm(Integer id);
 }

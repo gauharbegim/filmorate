@@ -10,5 +10,5 @@ public interface UserStorage {
     List<User> getUser();
 //    User deleteUser(User user);
     User updateUser(User user) throws ValidationException ;
-    User getUser(int id) throws ValidationException;
+    User getUser(int id);
 }

@@ -2,7 +2,9 @@ package ru.yandex.practicum.filmorate.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 import ru.yandex.practicum.filmorate.utils.ValidationException;
@@ -22,11 +24,14 @@ public class UserService {
         checkParams(userId, friendId);
         User user = userStorage.getUser(userId);
         User friend = userStorage.getUser(friendId);
+        if (user == null || friend == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Искомый объект не найден");
+        } else {
+            addNewFriend(user, friendId);
+            addNewFriend(friend, userId);
 
-        addNewFriend(user, friendId);
-        addNewFriend(friend, userId);
-
-        return userStorage.getUser(userId);
+            return userStorage.getUser(userId);
+        }
     }
 
     private void addNewFriend(User user, Integer newFriendId) throws ValidationException {
@@ -87,19 +92,23 @@ public class UserService {
     }
 
     public List<User> getMutualFriends(Integer userId, Integer friendId) throws ValidationException {
+        List<User> friendsList = new ArrayList<>();
+
         User user = userStorage.getUser(userId);
         User friend = userStorage.getUser(friendId);
+        if (user != null && friend != null) {
+            Set<Integer> userFriends = user.getFriends();
+            Set<Integer> friendFriends = friend.getFriends();
+            for (Integer userFriendId : userFriends) {
+                if (friendFriends.contains(userFriendId)) {
+                    User mutualFriend = userStorage.getUser(userFriendId);
+                    friendsList.add(mutualFriend);
+                }
 
-        Set<Integer> userFriends = user.getFriends();
-        Set<Integer> friendFriends = friend.getFriends();
-
-        List<User> friendsList = new ArrayList<>();
-        for (Integer userFriendId : userFriends){
-            if (friendFriends.contains(userFriendId)){
-                User mutualFriend = userStorage.getUser(userFriendId);
-                friendsList.add(mutualFriend);
             }
+
         }
+
         return friendsList;
     }
 }

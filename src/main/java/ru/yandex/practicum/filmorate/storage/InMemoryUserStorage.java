@@ -15,7 +15,7 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public User addNewUser(User user) throws ValidationException {
-        if (user.getName() == null) {
+        if (user.getName().isEmpty() || user.getName().isBlank()) {
             user.setName(user.getLogin());
         }
         if (users.containsKey(user.getId())) {
@@ -33,13 +33,9 @@ public class InMemoryUserStorage implements UserStorage {
         return new ArrayList<>(users.values());
     }
 
-    public User getUser(int id) throws ValidationException {
+    public User getUser(int id){
         User user = users.get(id);
-        if (user==null){
-            throw new ValidationException("User нет в базе ", id);
-        }else {
-            return user;
-        }
+        return user;
     }
 
     @Override

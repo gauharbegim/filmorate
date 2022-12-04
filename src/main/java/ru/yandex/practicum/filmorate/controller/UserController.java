@@ -2,8 +2,10 @@ package ru.yandex.practicum.filmorate.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
@@ -34,6 +36,16 @@ public class UserController {
     @GetMapping(value = "/users")
     public List<User> getUsersList() {
         return userStorage.getUser();
+    }
+
+    @GetMapping(value = "/users/{id}")
+    public User getUser(@PathVariable Integer id) {
+        User user = userStorage.getUser(id);
+        if (user!=null) {
+            return user;
+        }else{
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Искомый объект не найден");
+        }
     }
 
     @PutMapping(value = "/users/{id}/friends/{friendId}")

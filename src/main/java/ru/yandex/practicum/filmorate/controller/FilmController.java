@@ -38,6 +38,11 @@ public class FilmController {
         return filmStorage.getFilm();
     }
 
+    @GetMapping("/films/{id}")
+    public Film getFilm(@PathVariable Integer id){
+        return filmStorage.getFilm(id);
+    }
+
     @PutMapping("/films/{id}/like/{userId}")
     public Film addLike(@PathVariable Integer id, @PathVariable Integer userId) {
         try {
@@ -48,16 +53,12 @@ public class FilmController {
     }
 
     @DeleteMapping("/films/{id}/like/{userId}")
-    public Film deleteLike(@PathVariable Integer id, @PathVariable Integer userId) {
-        try {
-            return filmService.deleteLikeToFilm(id, userId);
-        } catch (ValidationException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
-        }
+    public Film deleteLike(@PathVariable Integer id, @PathVariable Integer userId) throws ValidationException {
+        return filmService.deleteLikeToFilm(id, userId);
     }
 
     @GetMapping("/films/popular")
-    public List<Film> getFilmsList(@RequestParam(name = "count") Integer count) {
+    public List<Film> getFilmsList(@RequestParam(defaultValue = "10", name = "count") Integer count) {
         return filmService.getTopPopular(count);
     }
 }
