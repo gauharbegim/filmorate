@@ -129,10 +129,6 @@ public class UserService {
 
     public User getUser(int id) {
         User user = userStorage.getUser(id);
-        if (user != null) {
-            return user;
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Искомый объект не найден");
-        }
+        return user;
     }
 }
