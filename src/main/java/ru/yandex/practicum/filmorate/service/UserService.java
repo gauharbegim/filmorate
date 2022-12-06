@@ -99,7 +99,7 @@ public class UserService {
         if (user != null && friend != null) {
             Set<Integer> userFriends = user.getFriends();
             Set<Integer> friendFriends = friend.getFriends();
-            if (userFriends!=null && friendFriends!=null ) {
+            if (userFriends != null && friendFriends != null) {
                 for (Integer userFriendId : userFriends) {
                     if (friendFriends.contains(userFriendId)) {
                         User mutualFriend = userStorage.getUser(userFriendId);
@@ -113,5 +113,26 @@ public class UserService {
         }
 
         return friendsList;
+    }
+
+    public User addNewUser(User user) throws ValidationException {
+        return userStorage.addNewUser(user);
+    }
+
+    public User updateUser(User user) throws ValidationException {
+        return userStorage.updateUser(user);
+    }
+
+    public List<User> getUser() {
+        return userStorage.getUser();
+    }
+
+    public User getUser(int id) {
+        User user = userStorage.getUser(id);
+        if (user != null) {
+            return user;
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Искомый объект не найден");
+        }
     }
 }

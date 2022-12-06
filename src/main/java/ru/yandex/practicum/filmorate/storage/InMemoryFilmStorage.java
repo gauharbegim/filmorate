@@ -8,10 +8,12 @@ import ru.yandex.practicum.filmorate.utils.ValidationException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Component
 public class InMemoryFilmStorage implements FilmStorage {
-    private final HashMap<Integer, Film> films = new HashMap<>();
+    private final Map<Integer, Film> films = new HashMap<>();
     private int id = 0;
 
     @Override
@@ -27,7 +29,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public ArrayList<Film> getFilm() {
+    public List<Film> getFilm() {
         return new ArrayList<Film>(films.values());
     }
 

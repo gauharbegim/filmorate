@@ -24,16 +24,16 @@ public class FilmService {
     private final UserStorage userStorage;
 
     public Film addLikeToFilm(Integer filmId, Integer userId) throws ValidationException {
-        checkParams(filmId, userId);
-        Film film = filmStorage.getFilm(filmId);
-        if (film == null) {
-            throw new ValidationException("Film нет в базе ", userId);
-        }
-        Set<Integer> like = film.getLikedUsersList();
-        like.add(userId);
-        film.setLikedUsersList(like);
-        filmStorage.updateFilm(film);
-        return filmStorage.getFilm(filmId);
+            checkParams(filmId, userId);
+            Film film = filmStorage.getFilm(filmId);
+            if (film == null) {
+                throw new ValidationException("Film нет в базе ", userId);
+            }
+            Set<Integer> like = film.getLikedUsersList();
+            like.add(userId);
+            film.setLikedUsersList(like);
+            filmStorage.updateFilm(film);
+            return filmStorage.getFilm(filmId);
     }
 
     public Film deleteLikeToFilm(Integer filmId, Integer userId) throws ValidationException {
@@ -69,7 +69,7 @@ public class FilmService {
 
     public List<Film> getTopPopular(Integer count) {
         List<Film> films = filmStorage.getFilm();
-        Comparator<Film> filmComparatorByLike = Comparator.comparing(Film::getLikeCnt).reversed();
+        Comparator<Film> filmComparatorByLike = Comparator.comparing(Film::getLikeCount).reversed();
         films.sort(filmComparatorByLike);
         List<Film> topFilmsList = new ArrayList<>();
         for (Film film : films) {
@@ -80,4 +80,19 @@ public class FilmService {
         return topFilmsList;
     }
 
+    public Film addNewFilm(Film film) throws ValidationException {
+        return filmStorage.addNewFilm(film);
+    }
+
+    public Film updateFilm(Film film) throws ValidationException {
+        return filmStorage.updateFilm(film);
+    }
+
+    public Film getFilm(Integer id) {
+        return filmStorage.getFilm(id);
+    }
+
+    public List<Film> getFilm() {
+        return filmStorage.getFilm();
+    }
 }

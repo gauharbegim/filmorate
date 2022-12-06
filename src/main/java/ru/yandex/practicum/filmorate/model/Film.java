@@ -40,11 +40,11 @@ public class Film {
 
     Set<Integer> likedUsersList = new HashSet<>();
 
-    private Integer likeCnt = 0;
+    private Integer likeCount = 0;
 
     public void setLikedUsersList(Set<Integer> likedUsersList) {
         this.likedUsersList = likedUsersList;
-        likeCnt = likedUsersList.size();
+        likeCount = likedUsersList.size();
     }
 
 }
