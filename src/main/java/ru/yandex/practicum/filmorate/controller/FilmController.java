@@ -1,48 +1,64 @@
 package ru.yandex.practicum.filmorate.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.service.FilmService;
 import ru.yandex.practicum.filmorate.utils.ValidationException;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Slf4j
 @Validated
+@RequiredArgsConstructor
 public class FilmController {
-    private final HashMap<Integer, Film> films = new HashMap<>();
-    private int id=0;
+    private final FilmService filmService;
 
     @PostMapping("/films")
     public Film addNewFilm(@RequestBody @Valid @NotNull Film film) throws ValidationException {
-        if(films.containsKey(film.getId())){
-            throw new ValidationException("Фильм - уже есть в базе", film.getId());
-        }else {
-            id++;
-            film.setId(id);
-            films.put(id, film);
-            return film;
-        }
+        return filmService.addNewFilm(film);
     }
 
     @PutMapping("/films")
     public Film updateFilm(@RequestBody @Valid @NotNull Film film) throws ValidationException {
-        if (films.containsKey(film.getId())) {
-            films.put(film.getId(), film);
-            return film;
-        }else{
-            throw new ValidationException("Фильма нет в базе", film.getId());
-        }
+        return filmService.updateFilm(film);
     }
 
     @GetMapping("/films")
     public List<Film> getFilmsList() {
-        return new ArrayList<>(films.values());
+        return filmService.getFilm();
+    }
+
+    @GetMapping("/films/{id}")
+    public Film getFilm(@PathVariable Integer id) {
+        return filmService.getFilm(id);
+    }
+
+    @PutMapping("/films/{id}/like/{userId}")
+    public Film addLike(@PathVariable Integer id, @PathVariable Integer userId) throws ValidationException {
+        return filmService.addLikeToFilm(id, userId);
+    }
+
+    @DeleteMapping("/films/{id}/like/{userId}")
+    public Film deleteLike(@PathVariable Integer id, @PathVariable Integer userId) throws ValidationException {
+        return filmService.deleteLikeToFilm(id, userId);
+    }
+
+    @GetMapping("/films/popular")
+    public List<Film> getFilmsList(@RequestParam(defaultValue = "10", name = "count") Integer count) {
+        return filmService.getTopPopular(count);
+    }
+
+    @ExceptionHandler({ValidationException.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Map<String, String> handleIncorrectCount(final ValidationException v) {
+        return Map.of("error", v.getMessage());
     }
 }
