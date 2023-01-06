@@ -11,8 +11,9 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -20,7 +21,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Film {
-    private int id;
+    private Integer id;
 
     @NotBlank(message = "name should not be blank")
     @NotNull(message = "name should not be null")
@@ -38,14 +39,18 @@ public class Film {
     @NotNull(message = "duration should not be null")
     private Integer duration;
 
-    Set<Integer> likedUsersList = new HashSet<>();
+    private Rating mpa;
+
+    private Set<Genre> genres;
+
+    private List<User> likedUsersList = new ArrayList<>();
 
     private Integer likeCount = 0;
 
-    public void setLikedUsersList(Set<Integer> likedUsersList) {
-        this.likedUsersList = likedUsersList;
-        likeCount = likedUsersList.size();
-    }
+//    public void setLikedUsersList(Set<UserLikesFilm> likedUsersList) {
+//        this.likedUsersList = likedUsersList;
+//        likeCount = likedUsersList.size();
+//    }
 
 }
 

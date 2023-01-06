@@ -11,10 +11,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Component
+@Component("inMemoryUserStorage")
 public class InMemoryUserStorage implements UserStorage {
     private final Map<Integer, User> users = new HashMap<>();
-    private int id = 0;
+    private Integer id = 0;
 
     @Override
     public User addNewUser(User user) throws ValidationException {
@@ -36,7 +36,7 @@ public class InMemoryUserStorage implements UserStorage {
         return new ArrayList<>(users.values());
     }
 
-    public User getUser(int id) {
+    public User getUser(Integer id) {
         if (users.containsKey(id)) {
             User user = users.get(id);
             return user;
