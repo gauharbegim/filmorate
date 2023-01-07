@@ -23,6 +23,7 @@ import java.util.Set;
 public class Film {
     Integer id;
 
+    @NotNull(message = "name should not be null")
     @NotBlank(message = "name should not be blank")
     String name;
 
@@ -34,8 +35,8 @@ public class Film {
     @FilmReleaseDateValidate
     Date releaseDate;
 
-    @Min(value = 0, message = "duration should be greater than 0")
     @NotNull(message = "duration should not be null")
+    @Min(value = 0, message = "duration should be greater than 0")
     Integer duration;
 
     Rating mpa;
