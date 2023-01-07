@@ -11,7 +11,6 @@ import lombok.experimental.FieldDefaults;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@FieldDefaults
 public class Genre {
     Integer id;
     String name;

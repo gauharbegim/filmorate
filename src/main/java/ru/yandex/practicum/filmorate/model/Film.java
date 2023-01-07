@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import lombok.experimental.FieldDefaults;
 import ru.yandex.practicum.filmorate.validator.FilmReleaseDateValidate;
 
 import javax.validation.constraints.Min;
@@ -21,7 +20,6 @@ import java.util.Set;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@FieldDefaults
 public class Film {
     Integer id;
 

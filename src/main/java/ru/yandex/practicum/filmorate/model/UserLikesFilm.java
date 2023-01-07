@@ -11,7 +11,6 @@ import lombok.experimental.FieldDefaults;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@FieldDefaults
 public class UserLikesFilm {
     Integer id;
     Integer filmId;
