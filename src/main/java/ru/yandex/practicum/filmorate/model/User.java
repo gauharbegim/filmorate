@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 import ru.yandex.practicum.filmorate.validator.UserEmailValidate;
 
 import java.util.Date;
@@ -14,17 +15,16 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @UserEmailValidate
+@FieldDefaults
 public class User {
-    private Integer id;
+    Integer id;
 
-    private String email;
+    String email;
 
-    private String login;
+    String login;
 
-    private String name;
+    String name;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date birthday;
-
-//    private Set<Friend> friends;
+    Date birthday;
 }

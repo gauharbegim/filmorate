@@ -50,19 +50,6 @@ public class UserService {
         return userStorage.getUser(userId);
     }
 
-    private void deleteFriend(User user, Integer friendId) {
-//        Set<Integer> friends = user.getFriends();
-//        if (friends != null) {
-//            if (friends.contains(friendId)) {
-//                friends.remove(friendId);
-//            } else {
-//                throw new ValidationException("У пользователя нет друга с данным ид", friendId);
-//            }
-//        } else {
-//            throw new ValidationException("У пользователя нет друзей", user.getId());
-//        }
-    }
-
     public List<User> getFriends(Integer userId) {
         List<User> users = new ArrayList<>();
 
@@ -82,7 +69,7 @@ public class UserService {
         }
     }
 
-    public List<User> getMutualFriends(Integer userId, Integer friendId) throws ValidationException {
+    public List<User> getMutualFriends(Integer userId, Integer friendId){
         List<User> friendsList = new ArrayList<>();
 
         User user = userStorage.getUser(userId);

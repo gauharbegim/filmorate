@@ -4,13 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults
 public class FilmGenre {
-    private Integer id;
-    private Integer filmId;
-    private Genre genre;
+    Integer id;
+    Integer filmId;
+    Genre genre;
 }

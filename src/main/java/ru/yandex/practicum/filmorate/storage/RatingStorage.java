@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface RatingStorage {
     List<Rating> getAllRating();
+
     Rating getRatingById(Integer id);
 }

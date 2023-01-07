@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 import ru.yandex.practicum.filmorate.validator.FilmReleaseDateValidate;
 
 import javax.validation.constraints.Min;
@@ -20,38 +21,32 @@ import java.util.Set;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults
 public class Film {
-    private Integer id;
+    Integer id;
 
     @NotBlank(message = "name should not be blank")
-    @NotNull(message = "name should not be null")
-    private String name;
+    String name;
 
     @Size(max = 200, message = "description length should not be smaller than 200")
-    private String description;
+    String description;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "release date should not be null")
     @FilmReleaseDateValidate
-    private Date releaseDate;
+    Date releaseDate;
 
     @Min(value = 0, message = "duration should be greater than 0")
     @NotNull(message = "duration should not be null")
-    private Integer duration;
+    Integer duration;
 
-    private Rating mpa;
+    Rating mpa;
 
-    private Set<Genre> genres;
+    Set<Genre> genres;
 
-    private List<User> likedUsersList = new ArrayList<>();
+    List<User> likedUsersList = new ArrayList<>();
 
-    private Integer likeCount = 0;
-
-//    public void setLikedUsersList(Set<UserLikesFilm> likedUsersList) {
-//        this.likedUsersList = likedUsersList;
-//        likeCount = likedUsersList.size();
-//    }
-
+    Integer likeCount = 0;
 }
 
 

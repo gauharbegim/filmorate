@@ -36,13 +36,6 @@ public class UserLikeFilmDbStorage implements UserLikeFilmStorage {
         return getLikesToFilmById(film);
     }
 
-
-    @Override
-    public List<UserLikesFilm> getAllUsersLikes() {
-        return getUsersLikes();
-    }
-
-
     private List<UserLikesFilm> getLikesToFilmById(Integer filmId) {
         String sqlQuery = String.format("SELECT * FROM user_likes_film WHERE film_id=%x", filmId);
         return jdbcTemplate.query(sqlQuery, this::mapRowToFilm);

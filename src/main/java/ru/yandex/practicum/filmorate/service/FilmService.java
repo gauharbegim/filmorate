@@ -46,7 +46,7 @@ public class FilmService {
         User user = userStorage.getUser(userId);
         if (user == null || film == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Искомый объект не найден");
-        }else{
+        } else {
             userLikeFilmStorage.addLikeToFilm(user.getId(), film.getId());
         }
 
@@ -59,7 +59,7 @@ public class FilmService {
         if (user == null || film == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Искомый объект не найден");
         } else {
-            userLikeFilmStorage.deleteUserLikeToFilm(userId,filmId);
+            userLikeFilmStorage.deleteUserLikeToFilm(userId, filmId);
             return filmStorage.getFilm(filmId);
         }
     }

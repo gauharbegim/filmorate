@@ -5,13 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults
 public class UserLikesFilm {
-    private Integer id;
-    private Integer filmId;
-    private Integer userId;
+    Integer id;
+    Integer filmId;
+    Integer userId;
 }
