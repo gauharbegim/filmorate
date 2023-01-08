@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.Genre;
+import ru.yandex.practicum.filmorate.model.Rating;
 import ru.yandex.practicum.filmorate.service.FilmService;
 import ru.yandex.practicum.filmorate.utils.ValidationException;
 
@@ -41,6 +43,26 @@ public class FilmController {
         return filmService.getFilm(id);
     }
 
+    @GetMapping("/genres")
+    public List<Genre> getGenresList() {
+        return filmService.getGenre();
+    }
+
+    @GetMapping("/genres/{id}")
+    public Genre getGenre(@PathVariable Integer id) {
+        return filmService.getGenre(id);
+    }
+
+    @GetMapping("/mpa")
+    public List<Rating> getRatingsList() {
+        return filmService.getRating();
+    }
+
+    @GetMapping("/mpa/{id}")
+    public Rating Rating(@PathVariable Integer id) {
+        return filmService.getRating(id);
+    }
+
     @PutMapping("/films/{id}/like/{userId}")
     public Film addLike(@PathVariable Integer id, @PathVariable Integer userId) throws ValidationException {
         return filmService.addLikeToFilm(id, userId);
@@ -61,4 +83,6 @@ public class FilmController {
     public Map<String, String> handleIncorrectCount(final ValidationException v) {
         return Map.of("error", v.getMessage());
     }
+
+
 }

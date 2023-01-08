@@ -12,5 +12,5 @@ public interface UserStorage {
 
     User updateUser(User user) throws ValidationException;
 
-    User getUser(int id);
+    User getUser(Integer id);
 }

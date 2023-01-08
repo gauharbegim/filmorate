@@ -8,7 +8,6 @@ import lombok.ToString;
 import ru.yandex.practicum.filmorate.validator.UserEmailValidate;
 
 import java.util.Date;
-import java.util.Set;
 
 @Data
 @ToString
@@ -16,16 +15,14 @@ import java.util.Set;
 @NoArgsConstructor
 @UserEmailValidate
 public class User {
-    private int id;
+    Integer id;
 
-    private String email;
+    String email;
 
-    private String login;
+    String login;
 
-    private String name;
+    String name;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date birthday;
-
-    private Set<Integer> friends;
+    Date birthday;
 }

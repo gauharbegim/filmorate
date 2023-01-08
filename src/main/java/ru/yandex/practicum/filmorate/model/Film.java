@@ -11,8 +11,9 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -20,33 +21,31 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Film {
-    private int id;
+    Integer id;
 
-    @NotBlank(message = "name should not be blank")
     @NotNull(message = "name should not be null")
-    private String name;
+    @NotBlank(message = "name should not be blank")
+    String name;
 
     @Size(max = 200, message = "description length should not be smaller than 200")
-    private String description;
+    String description;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "release date should not be null")
     @FilmReleaseDateValidate
-    private Date releaseDate;
+    Date releaseDate;
 
-    @Min(value = 0, message = "duration should be greater than 0")
     @NotNull(message = "duration should not be null")
-    private Integer duration;
+    @Min(value = 0, message = "duration should be greater than 0")
+    Integer duration;
 
-    Set<Integer> likedUsersList = new HashSet<>();
+    Rating mpa;
 
-    private Integer likeCount = 0;
+    Set<Genre> genres;
 
-    public void setLikedUsersList(Set<Integer> likedUsersList) {
-        this.likedUsersList = likedUsersList;
-        likeCount = likedUsersList.size();
-    }
+    List<User> likedUsersList = new ArrayList<>();
 
+    Integer likeCount = 0;
 }
 
 
